@@ -52,7 +52,6 @@ namespace testwpf
          return listProduct.ToList();
       }
 
-
       // events
 
       void OnStateChanged(object sender, EventArgs args)
