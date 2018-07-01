@@ -41,11 +41,16 @@ namespace testwpf
          // пример добавления в таблицу 
          // listProduct.Add(new Product("kek1", "kek2", "kek3"));
 
-         //BackgroundMode.Start( ... , SendMail.Send);
+         //BackgroundMode.Start( GetNewProduct , ... , ... , SendMail.Send); // TODO
 
          //...
       }
 
+      public List<Product> GetNewProduct()
+      {
+         Purser.Start();
+         return listProduct.ToList();
+      }
 
 
       // events
