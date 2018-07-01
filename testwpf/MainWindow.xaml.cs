@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Windows.Forms; // !!!!! Лиза, wpf 
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,17 +14,43 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
+using System.Collections.ObjectModel; // для ObservableCollection
+
+using testwpf.whiskas;
 
 namespace testwpf
 {
-   /// <summary>
-   /// Логика взаимодействия для MainWindow.xaml
-   /// </summary>
-   public partial class MainWindow : Window
+   public partial class MainWindow
    {
+      static public ObservableCollection<Product> listProduct = new ObservableCollection<Product>();
+
       public MainWindow()
       {
          InitializeComponent();
+
+         // заполнение таблицы
+         DataGrid1.ItemsSource = listProduct;
+
+         // пурсер
+         Purser.Start();
+
+         // иконка в трее
+         IconTray.InitializeNotifyIcon(this, "tree.ico", new ToolStripItem[] { });
+
+         // пример добавления в таблицу 
+         //listProduct.Add(new Product("kek1", "kek2", "kek3"));
+
+         //...
+      }
+
+
+
+      // events
+
+      void OnStateChanged(object sender, EventArgs args)
+      {
+         IconTray.ev(args);
       }
    }
 }
