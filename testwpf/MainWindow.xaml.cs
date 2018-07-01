@@ -33,13 +33,15 @@ namespace testwpf
          DataGrid1.ItemsSource = listProduct;
 
          // пурсер
-         Purser.Start();
+         Purser.Start(); // через раз парсит, хз почему
 
          // иконка в трее
          IconTray.InitializeNotifyIcon(this, "tree.ico", new ToolStripItem[] { });
 
          // пример добавления в таблицу 
-         //listProduct.Add(new Product("kek1", "kek2", "kek3"));
+         // listProduct.Add(new Product("kek1", "kek2", "kek3"));
+
+         //BackgroundMode.Start( ... , SendMail.Send);
 
          //...
       }
