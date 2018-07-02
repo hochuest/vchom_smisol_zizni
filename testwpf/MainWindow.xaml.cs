@@ -44,7 +44,7 @@ namespace testwpf
          BackgroundMode.Start(Purser.Start, UseDB.GetList, UseDB.addDB, SendMail.Send);
 
          // пурсер
-         listProduct = new ObservableCollection<Product>(Purser.Start()); // через раз парсит
+         // listProduct = new ObservableCollection<Product>(Purser.Start()); // через раз парсит
 
          // заполнение таблицы
          DataGrid1.ItemsSource = listProduct;
@@ -68,7 +68,10 @@ namespace testwpf
          cfg.findProduct = Prod.Text;
          cfg.categoryId = ID[CB.SelectedValue.ToString()];
 
-         listProduct = new ObservableCollection<Product>(Purser.Start());
+         List<Product> prod = Purser.Start();
+         if (prod.Count == 0)
+            listProduct.Clear();
+         listProduct = new ObservableCollection<Product>(prod);
       }
 
       private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
