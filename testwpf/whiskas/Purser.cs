@@ -93,7 +93,7 @@ namespace testwpf.whiskas
          //Console.ReadKey();
       }
 
-      static public void Start()
+      static public List<Product> Start()
       {
          //GetCategoryList();
          String link = CreateURL(product, categoryId);
@@ -106,6 +106,8 @@ namespace testwpf.whiskas
          HtmlNodeCollection nodeCollection = document.DocumentNode.SelectNodes("//div[@class='n-snippet-card2__title']/a");
          HtmlNodeCollection nodeCollection2 = document.DocumentNode.SelectNodes("//div[@class='price']");
 
+         List<Product> listProduct = new List<Product>();
+
          if (nodeCollection != null)
          {
             int i = 0;
@@ -116,11 +118,14 @@ namespace testwpf.whiskas
 
                Debug.WriteLine(description + " Цена " + price.Remove(price.Length - 2, 2) + " Руб.");
 
-               MainWindow.listProduct.Add(new Product(node.GetAttributeValue("title", ""), "https://market.yandex.ru" + node.GetAttributeValue("href", "") , price.Remove(price.Length - 2, 2)));
+               listProduct.Add(new Product(node.GetAttributeValue("title", ""), "https://market.yandex.ru" + node.GetAttributeValue("href", "") , price.Remove(price.Length - 2, 2)));
                
                i++;
             }
          }
+
+         return listProduct;
+
          //Console.Read();
       }
    }

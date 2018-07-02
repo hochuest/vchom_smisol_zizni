@@ -20,23 +20,16 @@ namespace testwpf
          DataGrid1.ItemsSource = listProduct;
 
          // пурсер
-         Purser.Start(); // через раз парсит, хз почему
+         listProduct = new ObservableCollection<Product>(Purser.Start()); // через раз парсит, хз почему
 
          // иконка в трее
          IconTray.InitializeNotifyIcon(this, "tree.ico", new ToolStripItem[] { });
 
-         // пример добавления в таблицу 
-         // listProduct.Add(new Product("kek1", "kek2", "kek3"));
+         // пример добавления в таблицу: listProduct.Add(new Product("kek1", "kek2", "kek3"));
 
-         //BackgroundMode.Start( GetNewProduct , ... , ... , SendMail.Send); // TODO
+         // BackgroundMode.Start( Purser.Start() , ... , ... , SendMail.Send); // TODO
 
          //...
-      }
-
-      public List<Product> GetNewProduct()
-      {
-         Purser.Start();
-         return listProduct.ToList();
       }
 
       // events
