@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,9 @@ namespace testwpf
       {
          InitializeComponent();
 
+         //cfg.findProduct = "холодильник";
+         //cfg.categoryId = "90764"; 
+
          cfg.findProduct = "Philips";
          cfg.categoryId = "54915";
 
@@ -40,11 +44,11 @@ namespace testwpf
 
          getID.Go(CB, ID);
 
+         // пурсер
+         //listProduct = new ObservableCollection<Product>(Purser.Start()); // через раз парсит
+
          // фоновый режим
          BackgroundMode.Start(Purser.Start, UseDB.GetList, UseDB.addDB, SendMail.Send);
-
-         // пурсер
-         // listProduct = new ObservableCollection<Product>(Purser.Start()); // через раз парсит
 
          // заполнение таблицы
          DataGrid1.ItemsSource = listProduct;
@@ -65,18 +69,20 @@ namespace testwpf
 
       private void CB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
       {
-         cfg.findProduct = Prod.Text;
          cfg.categoryId = ID[CB.SelectedValue.ToString()];
-
-         List<Product> prod = Purser.Start();
-         if (prod.Count == 0)
-            listProduct.Clear();
-         listProduct = new ObservableCollection<Product>(prod);
       }
 
       private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
       {
-
+         cfg.findProduct = Prod.Text;
+      }
+         
+      private void Button_Click(object sender, RoutedEventArgs e)
+      {
+         List<Product> prod = Purser.Start();
+         if (prod.Count == 0)
+            listProduct.Clear();
+         listProduct = new ObservableCollection<Product>(prod);
       }
    }
 }
