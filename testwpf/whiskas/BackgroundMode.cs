@@ -47,7 +47,8 @@ namespace testwpf.whiskas
             }
          }
 
-         SendMailMethod?.Invoke(newProduct);
+         if ( newProduct.Count > 0 )
+            SendMailMethod?.Invoke(newProduct);
       }
 
    }
