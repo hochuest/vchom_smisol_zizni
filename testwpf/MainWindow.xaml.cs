@@ -5,6 +5,9 @@ using System.Linq;
 using System.Collections.ObjectModel; // для ObservableCollection
 
 using testwpf.whiskas;
+using HtmlAgilityPack;
+using System.Net;
+using System.IO;
 
 namespace testwpf
 {
@@ -12,6 +15,7 @@ namespace testwpf
    {
       static public ObservableCollection<Product> listProduct = new ObservableCollection<Product>();
       static public Settings cfg = new Settings();
+      static Dictionary<string, string> ID = new Dictionary<string, string>(16);
 
       public MainWindow()
       {
@@ -34,6 +38,8 @@ namespace testwpf
          cfg.hour = 15;
          cfg.minute = 09;
 
+         getID.Go(CB, ID);
+
          // фоновый режим
          BackgroundMode.Start(Purser.Start, UseDB.GetList, UseDB.addDB, SendMail.Send);
 
@@ -55,6 +61,19 @@ namespace testwpf
       void OnStateChanged(object sender, EventArgs args)
       {
          IconTray.ev(args);
+      }
+
+      private void CB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+      {
+         cfg.findProduct = ID[CB.SelectedValue.ToString()];
+         cfg.categoryId = Prod.Text;
+
+         listProduct = new ObservableCollection<Product>(Purser.Start());
+      }
+
+      private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+      {
+
       }
    }
 }

@@ -69,6 +69,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="whiskas\BackgroundMode.cs" />
+    <Compile Include="whiskas\getID.cs" />
     <Compile Include="whiskas\IconTray.cs" />
     <Compile Include="whiskas\Product.cs" />
     <Compile Include="whiskas\Purser.cs" />
