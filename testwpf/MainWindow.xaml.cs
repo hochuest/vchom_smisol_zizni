@@ -65,8 +65,8 @@ namespace testwpf
 
       private void CB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
       {
-         cfg.findProduct = ID[CB.SelectedValue.ToString()];
-         cfg.categoryId = Prod.Text;
+         cfg.findProduct = Prod.Text;
+         cfg.categoryId = ID[CB.SelectedValue.ToString()];
 
          listProduct = new ObservableCollection<Product>(Purser.Start());
       }
