@@ -19,16 +19,23 @@ namespace testwpf
 
          cfg.findProduct = "Philips";
          cfg.categoryId = "54915";
+
          cfg.mailLogin = "nim20101@yandex.ru";
          cfg.mailPass = "madama98";
+
          cfg.recipientOfLetters = "nim20101@yandex.ru";
-         cfg.letter_subject = "theme";
+
+         cfg.message_header = "заголовок сообщения";
+         cfg.letter_subject = "тема сообщения";
 
          cfg.before_the_message = "Поступили новые товары: \n";
          cfg.after_the_message = " (c) Система оповещений о новых товарах";
 
-         cfg.hour = 14;
-         cfg.minute = 59;
+         cfg.hour = 15;
+         cfg.minute = 09;
+
+         // фоновый режим
+         BackgroundMode.Start(Purser.Start, UseDB.GetList, UseDB.addDB, SendMail.Send);
 
          // пурсер
          listProduct = new ObservableCollection<Product>(Purser.Start()); // через раз парсит
@@ -38,9 +45,6 @@ namespace testwpf
 
          // иконка в трее
          IconTray.InitializeNotifyIcon(this, "tree.ico", new ToolStripItem[] { });
-
-         // фоновый режим
-         BackgroundMode.Start( Purser.Start , UseDB.GetList, UseDB.addDB, SendMail.Send);
 
          // пример добавления в таблицу: listProduct.Add(new Product("kek1", "kek2", "kek3"));
          // ...
