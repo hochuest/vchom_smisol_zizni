@@ -18,10 +18,7 @@ namespace testwpf.whiskas
    public class Purser
    {
       //имя продукта берем из формы, айдишники всех категорий мы знаем
-      static String product = "Phillips";//можно оставить пустым, тогда из урла text= убрать
-      static String categoryId = "54915";
       private static string CreateURL(String product, String id)
-
       {
          String result = "https://market.yandex.ru/catalog/" + id + "/list?text=" + product + "&local-offers-first=0&priceto=2000&how=aprice";
          return result;
@@ -96,7 +93,7 @@ namespace testwpf.whiskas
       static public List<Product> Start()
       {
          //GetCategoryList();
-         String link = CreateURL(product, categoryId);
+         String link = CreateURL(MainWindow.cfg.findProduct, MainWindow.cfg.categoryId);
          var pageContent = LoadPage(link);
          var document = new HtmlDocument();
          document.LoadHtml(pageContent);

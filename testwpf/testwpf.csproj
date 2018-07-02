@@ -73,6 +73,9 @@
     <Compile Include="whiskas\Product.cs" />
     <Compile Include="whiskas\Purser.cs" />
     <Compile Include="whiskas\SendMail.cs" />
+    <Compile Include="whiskas\Setings.cs" />
+    <Compile Include="whiskas\UseDB.cs" />
+    <Compile Include="whiskas\XmlSaver.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

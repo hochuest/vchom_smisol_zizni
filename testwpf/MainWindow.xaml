@@ -13,9 +13,26 @@
         StateChanged="OnStateChanged">
 
     <Grid>
+        <TreeView HorizontalAlignment="Left"  Height="245"  Margin="553,27,0,0"  VerticalAlignment="Top"  Width="208" >
+            <TreeViewItem Header="MainItem" IsExpanded="True">
+                <TreeViewItem Header="SubItem1" />
+                <TreeViewItem Header="SubItem2" IsExpanded="True">
+                    <TreeViewItem Header="SubItem2.1" />
+                    <TreeViewItem Header="SubItem2.2" />
+                    <TreeViewItem Header="SubItem2.3" />
+                </TreeViewItem>
+                <TreeViewItem Header="SubItem3" />
+                <TreeViewItem Header="SubItem4" IsExpanded="True">
+                    <TreeViewItem Header="SubItem4.1" />
+                    <TreeViewItem Header="SubItem4.2" />
+                    <TreeViewItem Header="SubItem4.3" />
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+
         <DataGrid Name="DataGrid1"
                   AutoGenerateColumns="False"
-                  Margin="27,105,45,42">
+                  Margin="32,114,327,32">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Name" Binding="{Binding name}"/>

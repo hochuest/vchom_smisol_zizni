@@ -11,19 +11,17 @@ namespace testwpf.whiskas
       static Action<Product> AddDB;
       static Action<List<Product>> SendMailMethod;
 
-      static int hour = 10; // нужн изменять через конфиг
-      static int minute = 30; // нужн изменять через конфиг
-
       static public void Start(Func<List<Product>> _GetListUrlNew, Func<List<Product>> _GetListUrlDB, Action<Product> _AddDB, Action<List<Product>> _SendMailMethod)
       {
+
          GetListUrlNew = _GetListUrlNew;
          GetListUrlDB = _GetListUrlDB;
          AddDB = _AddDB;
          SendMailMethod = _SendMailMethod;
 
          var timer = new Timer((obj) => {
-            if ((hour == DateTime.Now.Hour) &&
-               ( minute == DateTime.Now.Minute))
+            if (( MainWindow.cfg.hour == DateTime.Now.Hour) &&
+               ( MainWindow.cfg.minute == DateTime.Now.Minute))
             {
                Body();
             }

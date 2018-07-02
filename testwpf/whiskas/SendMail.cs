@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Mail;
+using testwpf;
 
 namespace testwpf.whiskas
 {
@@ -10,14 +11,14 @@ namespace testwpf.whiskas
          // настройки smtp-сервера, с которого мы и будем отправлять письмо
          SmtpClient smtp = new SmtpClient("smtp.yandex.ru", 587);
          smtp.EnableSsl = true;
-         smtp.Credentials = new System.Net.NetworkCredential("nim20101@yandex.ru", "madama98"); // TODO: настройки через конфиг
+         smtp.Credentials = new System.Net.NetworkCredential(MainWindow.cfg.mailLogin, MainWindow.cfg.mailPass);
 
          // наш email с заголовком письма
-         MailAddress from = new MailAddress("nim20101@yandex.ru", "Test"); // TODO: настройки через конфиг
+         MailAddress from = new MailAddress( MainWindow.cfg.mailLogin, MainWindow.cfg.message_header );
          // кому отправляем
-         MailAddress to = new MailAddress("nim20101@yandex.ru"); // TODO: настройки через конфиг
+         MailAddress to = new MailAddress( MainWindow.cfg.recipientOfLetters);
          // создаем объект сообщения
-         MailMessage m = new MailMessage(from, to);
+         MailMessage m = new MailMessage( from, to );
          // тема письма
          m.Subject = "theme";
          // текст письма
@@ -26,7 +27,7 @@ namespace testwpf.whiskas
          foreach (var pr in newProducts)
             message += $"{pr.name} {pr.price} {pr.url} \n";
 
-         m.Body = "Поступили новые товары: \n" + message; //  TODO: как то тоже настравивать через конфиг
+         m.Body = MainWindow.cfg.before_the_message + message + MainWindow.cfg.after_the_message;
          smtp.Send(m);
       }
    }
