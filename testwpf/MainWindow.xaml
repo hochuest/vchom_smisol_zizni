@@ -8,8 +8,8 @@
         xmlns:local="clr-namespace:testwpf"
         mc:Ignorable="d"
         Title="Хочу спать" 
-        Height="578" 
-        Width="782"
+        Height="477" 
+        Width="732"
         
         MinHeight="400"
         MinWidth="400"
