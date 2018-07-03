@@ -45,7 +45,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Controls:ProgressRing Name="ProgressRing" IsActive="True" Margin="125,78,125,64" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="140" Height="140" Grid.Row="1" />
+        <Controls:ProgressRing Name="ProgressRing" IsActive="False" Margin="125,78,125,64" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="140" Height="140" Grid.Row="1" />
 
         <Grid>
             <Grid.ColumnDefinitions>
