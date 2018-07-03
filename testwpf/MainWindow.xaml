@@ -8,17 +8,20 @@
         xmlns:local="clr-namespace:testwpf"
         mc:Ignorable="d"
         Title="Хочу спать" 
-        Height="461" 
-        Width="695.85"
+        Height="578" 
+        Width="782"
         
-        MinHeight="200"
+        MinHeight="400"
         MinWidth="400"
                       
         StateChanged="OnStateChanged"
                       Foreground="LightGreen" Background="#2199BD"
                       >
 
-    <Grid>
+    <Grid Margin="0,0,2,3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="84"/>
             <RowDefinition/>
@@ -42,7 +45,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Controls:ProgressRing Name="ProgressRing" IsActive="False" Margin="296,126,299,124" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Grid.Row="1" />
+        <Controls:ProgressRing Name="ProgressRing" IsActive="True" Margin="125,78,125,64" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="140" Height="140" Grid.Row="1" />
 
         <Grid>
             <Grid.ColumnDefinitions>
