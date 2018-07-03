@@ -12,16 +12,17 @@ namespace testwpf.whiskas
 
       public static void addDB(Product p)
       {
-         List<Product> db = new List<Product>();
-         if ( File.Exists(filename) )
-            db = GetList();
+         var db = GetList();
          db.Add(p);
-         XmlSaver.Save( filename, (object)(db) );
+         XmlSaver.Save( filename, db );
       }
 
       public static List<Product> GetList()
       {
-         return (List<Product>)(XmlSaver.Read(filename));
+         if ( File.Exists(filename) )
+            return (List<Product>)(XmlSaver.Read(filename, typeof(List<Product>)));
+         else
+            return new List<Product>();
       }
    }
 }

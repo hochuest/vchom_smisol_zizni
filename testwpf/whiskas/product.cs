@@ -12,6 +12,8 @@ namespace testwpf.whiskas
       public string url { get; set; }
       public string price { get; set; }
 
+      public Product() { }
+
       public Product(string name, string url, string price)
       {
          this.name = name;

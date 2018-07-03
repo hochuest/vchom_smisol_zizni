@@ -1,32 +1,29 @@
 ﻿using System.Xml.Serialization;
 using System.IO;
+using System.Xml;
+using System.Text;
+using System.Collections.Generic;
 
 namespace testwpf.whiskas
 {
-   class XmlSaver
+   static class XmlSaver
    {
-      public static void Save(string filename, object obj)
+      public static void Save<T>(string fileName, T obj)
       {
-         XmlSerializer xs = new XmlSerializer(obj.GetType());
-         Stream writer = new FileStream(filename, FileMode.Create);
-         xs.Serialize(writer, obj);
-         writer.Close();
-      }
-
-      public static object Read(string filename)
-      {
-         XmlSerializer xs = new XmlSerializer(typeof( object ));
-         if ( File.Exists(filename) )
+         var serializer = new XmlSerializer(typeof(T));
+         using (var stream = File.OpenWrite(fileName))
          {
-            Stream reader = new FileStream(filename, FileMode.Open);
-            object to = xs.Deserialize(reader);
-            reader.Close();
-            return to;
+            serializer.Serialize(stream, obj);
          }
-
-         return null;
-         
       }
 
+      public static object Read(string fileName, System.Type type )
+      {
+         var serializer = new XmlSerializer(type);
+         using (var stream = File.OpenRead(fileName))
+         {
+            return (object)(serializer.Deserialize(stream));
+         }
+      }
    }
 }

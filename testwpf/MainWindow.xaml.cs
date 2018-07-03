@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Windows;
+using System.Windows.Input;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +9,13 @@ using testwpf.whiskas;
 using HtmlAgilityPack;
 using System.Net;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace testwpf
 {
    public partial class MainWindow
    {
-      static public ObservableCollection<Product> listProduct = new ObservableCollection<Product>();
+      static public List<Product> listProduct = new List<Product>();
       static public Settings cfg = new Settings();
       static Dictionary<string, string> ID = new Dictionary<string, string>(16);
 
@@ -25,8 +26,8 @@ namespace testwpf
          //cfg.findProduct = "холодильник";
          //cfg.categoryId = "90764"; 
 
-         cfg.findProduct = "Philips";
-         cfg.categoryId = "54915";
+         cfg.findProduct = "Утюг";
+         //cfg.categoryId = "54915";
 
          cfg.mailLogin = "nim20101@yandex.ru";
          cfg.mailPass = "madama98";
@@ -39,10 +40,10 @@ namespace testwpf
          cfg.before_the_message = "Поступили новые товары: \n";
          cfg.after_the_message = " (c) Система оповещений о новых товарах";
 
-         cfg.hour = 15;
-         cfg.minute = 09;
+         cfg.hour = 22;
+         cfg.minute = 44;
 
-         getID.Go(CB, ID);
+         // getID.Go(CB, ID);
 
          // пурсер
          //listProduct = new ObservableCollection<Product>(Purser.Start()); // через раз парсит
@@ -60,6 +61,24 @@ namespace testwpf
          // ...
       }
 
+      async void Find()
+      {
+         DataGrid1.ItemsSource = new List<Product>();
+         ProgressRing.IsActive = true;
+
+         DataGrid1.ItemsSource = await Task.Factory.StartNew(() => {
+            List<Product> prod = new List<Product>();
+
+            prod = Purser.Start();
+            if (prod.Count == 0)
+               listProduct.Clear();
+
+            return prod;
+         });
+
+         ProgressRing.IsActive = false;
+      }
+
       // events
 
       void OnStateChanged(object sender, EventArgs args)
@@ -69,20 +88,16 @@ namespace testwpf
 
       private void CB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
       {
-         cfg.categoryId = ID[CB.SelectedValue.ToString()];
+         //Find();
       }
-
-      private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+      
+      private void Prod_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
       {
-         cfg.findProduct = Prod.Text;
-      }
-         
-      private void Button_Click(object sender, RoutedEventArgs e)
-      {
-         List<Product> prod = Purser.Start();
-         if (prod.Count == 0)
-            listProduct.Clear();
-         listProduct = new ObservableCollection<Product>(prod);
+         if (e.Key == Key.Return)
+         {
+            cfg.findProduct = Prod.Text;
+            Find();
+         }
       }
    }
 }

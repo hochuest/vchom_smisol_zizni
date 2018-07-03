@@ -8,26 +8,24 @@
         xmlns:local="clr-namespace:testwpf"
         mc:Ignorable="d"
         Title="Хочу спать" 
-        Height="472" 
-        Width="867.85"
+        Height="461" 
+        Width="695.85"
+        
+        MinHeight="200"
+        MinWidth="400"
+                      
         StateChanged="OnStateChanged"
-                      Foreground="LightGreen" Background="#FF18A2CB" 
+                      Foreground="LightGreen" Background="#2199BD"
                       >
 
     <Grid>
-        <Button Margin="403,15,404,400" Content="search" Click="Button_Click" RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="5.313"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="84"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <DataGrid Name="DataGrid1"
                   AutoGenerateColumns="False"
-                  Margin="23,79,27,31" RenderTransformOrigin="0.5,0.5">
+                  Margin="20,21,26,28" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
             <DataGrid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -43,45 +41,64 @@
                 <DataGridTextColumn Width="100" Header="Price" Binding="{Binding price}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox Name="CB" HorizontalAlignment="Left" Height="21" Margin="535,18,0,0" VerticalAlignment="Top" Width="286" SelectionChanged="CB_SelectionChanged" RenderTransformOrigin="0.5,0.5">
-            <ComboBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="2.606"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ComboBox.RenderTransform>
-        </ComboBox>
-        <TextBox Name="Prod" HorizontalAlignment="Left" Height="10" Margin="81,17,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="314" TextChanged="TextBox_TextChanged" RenderTransformOrigin="0.5,0.5">
-            <TextBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-2.03"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBox.RenderTransform>
-        </TextBox>
-        <Label Content="Категория" HorizontalAlignment="Left" Height="26" Margin="463,16,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="0.248,0.691">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-7.57"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>
-        <Label Content="Запрос" HorizontalAlignment="Left" Height="26" Margin="27,19,0,0" VerticalAlignment="Top" Width="57" RenderTransformOrigin="0.5,0.5">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="7.865"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>
+
+        <Controls:ProgressRing Name="ProgressRing" IsActive="False" Margin="296,126,299,124" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Grid.Row="1" />
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="351*"/>
+                <ColumnDefinition Width="337*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Controls:RangeSlider Background="White" Margin="23,58,32,5" RenderTransformOrigin="0.5,0.5">
+                <Controls:RangeSlider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-1.783"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Controls:RangeSlider.RenderTransform>
+            </Controls:RangeSlider>
+
+            <TextBox Name="Prod" Height="27" Margin="22,21,32,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" KeyDown="Prod_KeyDown" Style="{DynamicResource SearchMetroTextBox}">
+                <TextBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-1.57"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </TextBox.RenderTransform>
+            </TextBox>
+
+            <ComboBox Name="CB" Height="26" Margin="13,21,26,0" VerticalAlignment="Top" SelectionChanged="CB_SelectionChanged" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
+                <ComboBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="2.606"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </ComboBox.RenderTransform>
+            </ComboBox>
+
+            <Label Content="Категория" HorizontalAlignment="Left" Height="26" Margin="23,39,0,0" VerticalAlignment="Top"  RenderTransformOrigin="0.248,0.691" Grid.Column="1" Width="66">
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="3.453"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+
+        </Grid>
+
+
+
+
     </Grid>
 </Controls:MetroWindow>
