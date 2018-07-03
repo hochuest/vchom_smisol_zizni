@@ -39,7 +39,7 @@ namespace testwpf.whiskas
             foreach (HtmlNode node in nodeCollection)
             {
                string price = nodeCollection2[++i].InnerText;
-               listProduct.Add(new Product(node.GetAttributeValue("title", ""), "https://market.yandex.ru" + node.GetAttributeValue("href", ""), price));
+               listProduct.Add(new Product(node.GetAttributeValue("title", ""), "https://market.yandex.ru" + node.GetAttributeValue("href", ""), price.Remove(price.Length - 7, 7) ));
             }
          }
 
