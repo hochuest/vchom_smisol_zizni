@@ -116,36 +116,6 @@ namespace testwpf
             Find();
          }
       }
-
-      private void RangeSlider_LowerValueChanged(object sender, MahApps.Metro.Controls.RangeParameterChangedEventArgs e)
-      {
-
-      }
-
-      private void RangeSlider_UpperValueChanged(object sender, MahApps.Metro.Controls.RangeParameterChangedEventArgs e)
-      {
-
-      }
-
-      private void RangeSlider_LowerThumbDragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
-      {
-
-      }
-
-      private void RangeSlider_LowerThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-      {
-
-      }
-
-      private void RangeSlider_UpperThumbDragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
-      {
-
-      }
-
-      private void RangeSlider_UpperThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-      {
-
-      }
       
       private void Button_Click(object sender, RoutedEventArgs e)
       {
