@@ -6,12 +6,12 @@ namespace testwpf.whiskas
 {
    public static class BackgroundMode
    {
-      static Func<Request, List<Product>> GetListUrlNew;
+      static Func<Request, string, List<Product>> GetListUrlNew;
       static Func<List<Request>> GetListUrlDB;
       static Action<List<Request>> AddDB;
       static Action<List<Request>> SendMailMethod;
 
-      static public void Start(Func<Request, List<Product>> _GetListUrlNew, Func<List<Request>> _GetListUrlDB, Action<List<Request>> _AddDB, Action<List<Request>> _SendMailMethod)
+      static public void Start(Func<Request, string, List<Product>> _GetListUrlNew, Func<List<Request>> _GetListUrlDB, Action<List<Request>> _AddDB, Action<List<Request>> _SendMailMethod)
       {
 
          GetListUrlNew = _GetListUrlNew;
@@ -39,7 +39,7 @@ namespace testwpf.whiskas
          foreach ( var request in listProductDB )
          {
             var newProducts = new List<Product>();
-            List<Product> listProductNew = GetListUrlNew?.Invoke(request);
+            List<Product> listProductNew = GetListUrlNew?.Invoke(request, null);
 
             foreach (Product prod in listProductNew)
             {

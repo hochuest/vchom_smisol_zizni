@@ -13,7 +13,7 @@ namespace testwpf.whiskas
       public int minPrice { get; set; }
       public int maxPrice { get; set; }
 
-      Request() { }
+      public Request() { }
 
       public Request(string requestName, List<Product> ListProduct, int minPrice , int maxPrice)
       {

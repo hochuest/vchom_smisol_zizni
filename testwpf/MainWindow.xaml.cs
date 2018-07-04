@@ -1,15 +1,13 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Linq;
-using System.Collections.ObjectModel; // для ObservableCollection
 
 using testwpf.whiskas;
-using HtmlAgilityPack;
-using System.Net;
-using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Documents;
+using System.Diagnostics;
 
 namespace testwpf
 {
@@ -21,6 +19,7 @@ namespace testwpf
       public MainWindow()
       {
          InitializeComponent();
+
 
          //cfg.findProduct = "холодильник";
          //cfg.categoryId = "90764"; 
@@ -52,9 +51,12 @@ namespace testwpf
 
          // иконка в трее
          IconTray.InitializeNotifyIcon(this, "tree.ico", new ToolStripItem[] { });
+
+
+         
       }
 
-      async void Find()
+      async void Find(string path = null)
       {
          DataGrid1.ItemsSource = new List<Product>();
          ProgressRing.IsActive = true;
@@ -62,12 +64,24 @@ namespace testwpf
          DataGrid1.ItemsSource = await Task.Factory.StartNew(() => {
             List<Product> prod = new List<Product>();
 
-            prod = Purser.Start();
+            prod = Purser.Start(null, path);
 
             return prod;
          });
 
          ProgressRing.IsActive = false;
+
+         if (Purser.CategoryList.Count > 0)
+         {
+            CB.IsEnabled = true;
+            foreach (var node in Purser.CategoryList)
+               CB.Items.Add(node.Key);
+
+            if (this.IsActive)
+               CB.IsDropDownOpen = true;
+         }
+         else
+            CB.IsEnabled = false;
       }
 
       // events
@@ -77,15 +91,21 @@ namespace testwpf
          IconTray.ev(args);
       }
 
+      private void DG_Hyperlink_Click(object sender, RoutedEventArgs e)
+      {
+         Hyperlink link = (Hyperlink)e.OriginalSource;
+         Process.Start(link.NavigateUri.AbsoluteUri);
+      }
+
+      bool flag;
       private void CB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
       {
          if (flag) return;
-         DataGrid1.ItemsSource = Purser.Start(CB.SelectedItem.ToString());
+         Find(CB.SelectedItem.ToString());
          flag = true;
          CB.Items.Clear();
+         CB.IsEnabled = false;
          flag = false;
-         foreach (var node in Purser.CategoryList)
-            CB.Items.Add(node.Key);
       }
 
       private void Prod_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -125,6 +145,11 @@ namespace testwpf
       private void RangeSlider_UpperThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
       {
 
+      }
+      
+      private void Button_Click(object sender, RoutedEventArgs e)
+      {
+         Flyout.IsOpen = true;
       }
    }
 }

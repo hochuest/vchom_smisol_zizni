@@ -8,8 +8,8 @@
         xmlns:local="clr-namespace:testwpf"
         mc:Ignorable="d"
         Title="Хочу спать" 
-        Height="477" 
-        Width="732"
+        Height="439" 
+        Width="675"
         
         MinHeight="400"
         MinWidth="400"
@@ -39,8 +39,14 @@
             </DataGrid.RenderTransform>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Header="название товара" Binding="{Binding name}"/>
-                <DataGridTextColumn Width="*" Header="ссылка" Binding="{Binding url}"/>
+                <DataGridHyperlinkColumn Width="*" Header="Товар" Binding="{Binding url}" ContentBinding="{Binding name}">
+                    <DataGridHyperlinkColumn.ElementStyle>
+                        <Style>
+                            <EventSetter Event="Hyperlink.Click" Handler="DG_Hyperlink_Click"/>
+
+                        </Style>
+                    </DataGridHyperlinkColumn.ElementStyle>
+                </DataGridHyperlinkColumn>
                 <DataGridTextColumn Width="100" Header="цена" Binding="{Binding price}"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -54,18 +60,19 @@
             </Grid.ColumnDefinitions>
 
 
-            <Controls:RangeSlider Margin="23,58,32,5" RenderTransformOrigin="0.5,0.5" Controls:SliderHelper.TrackValueFillBrush="#CCFFFFFF" Controls:SliderHelper.ThumbFillBrush="#FF575757" Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True"
+            <Controls:RangeSlider Name="RangeSlider" Margin="23,58,32,5" RenderTransformOrigin="0.5,0.5" Controls:SliderHelper.TrackValueFillBrush="#CCFFFFFF" Controls:SliderHelper.ThumbFillBrush="#FF575757" Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True"
                      
-            Minimum="{Binding Path=MinValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-            Maximum="{Binding Path=MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-            LowerValue="{Binding Path=CurrentMinValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            UpperValue="{Binding Path=CurrentMaxValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Minimum="1"
+            Maximum="20000"
+            Value="200"      
+            LowerValue="0"
+            UpperValue="250"
             LowerValueChanged="RangeSlider_LowerValueChanged" UpperValueChanged="RangeSlider_UpperValueChanged"
             LowerThumbDragStarted="RangeSlider_LowerThumbDragStarted"
             LowerThumbDragCompleted="RangeSlider_LowerThumbDragCompleted"
             UpperThumbDragStarted="RangeSlider_UpperThumbDragStarted" 
             UpperThumbDragCompleted="RangeSlider_UpperThumbDragCompleted" 
-            AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2" MoveWholeRange="True"
+            AutoToolTipPlacement="BottomRight"  MoveWholeRange="True"
             IsSnapToTickEnabled="True" IsMoveToPointEnabled="True" ExtendedMode="True" Controls:SliderHelper.TrackValueFillHoverBrush="#CCFFFFFF" Controls:SliderHelper.TrackValueFillPressedBrush="#CCFFFFFF" Controls:SliderHelper.ThumbFillHoverBrush="#FF7A7979"
                                   >
                 <Controls:RangeSlider.RenderTransform>
@@ -79,14 +86,14 @@
             </Controls:RangeSlider>
 
 
-            
-            
+
+
             <TextBox Name="Prod" Height="27" Margin="22,21,32,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" KeyDown="Prod_KeyDown" Style="{DynamicResource SearchMetroTextBox}">
 
                 <Controls:TextBoxHelper.ButtonCommand>
                     <Binding Path="FileBrowseCommand" Mode="OneWay" />
                 </Controls:TextBoxHelper.ButtonCommand>
-                
+
                 <TextBox.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -95,10 +102,10 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </TextBox.RenderTransform>
-                
+
             </TextBox>
 
-            <ComboBox Name="CB" Height="26" Margin="13,21,26,0" VerticalAlignment="Top" SelectionChanged="CB_SelectionChanged" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
+            <ComboBox Name="CB" Height="26" Margin="13,21,26,0" VerticalAlignment="Top"  SelectionChanged="CB_SelectionChanged" RenderTransformOrigin="0.5,0.5" Grid.Column="1" IsEnabled="True" BorderBrush="#FF747474" Foreground="#FF939393" Background="#FFE8E6E6" Style="{DynamicResource MetroComboBox}">
                 <ComboBox.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -120,7 +127,12 @@
                 </Label.RenderTransform>
             </Label>
 
+            <Button Grid.Column="1" Height="25" Margin="0,0,0,59" Click="Button_Click" HorizontalAlignment="Right" Width="25"/>
+
         </Grid>
+        <Controls:Flyout Name ="Flyout" Header="Flyout" Position="Right" Grid.RowSpan="2" Margin="200,0,0,0">
+            <!-- Your custom content here -->
+        </Controls:Flyout>
 
 
 
