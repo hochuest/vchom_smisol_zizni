@@ -75,7 +75,8 @@ namespace testwpf
          {
             CB.IsEnabled = true;
             foreach (var node in Purser.CategoryList)
-               CB.Items.Add(node.Key);
+               if (node.Key != "")
+                  CB.Items.Add(node.Key);
 
             if (this.IsActive)
                CB.IsDropDownOpen = true;
