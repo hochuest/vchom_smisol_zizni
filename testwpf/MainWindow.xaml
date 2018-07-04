@@ -39,9 +39,9 @@
             </DataGrid.RenderTransform>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding name}"/>
-                <DataGridTextColumn Width="*" Header="Url" Binding="{Binding url}"/>
-                <DataGridTextColumn Width="100" Header="Price" Binding="{Binding price}"/>
+                <DataGridTextColumn Width="*" Header="название товара" Binding="{Binding name}"/>
+                <DataGridTextColumn Width="*" Header="ссылка" Binding="{Binding url}"/>
+                <DataGridTextColumn Width="100" Header="цена" Binding="{Binding price}"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -54,7 +54,20 @@
             </Grid.ColumnDefinitions>
 
 
-            <Controls:RangeSlider Background="White" Margin="23,58,32,5" RenderTransformOrigin="0.5,0.5">
+            <Controls:RangeSlider Margin="23,58,32,5" RenderTransformOrigin="0.5,0.5" Controls:SliderHelper.TrackValueFillBrush="#CCFFFFFF" Controls:SliderHelper.ThumbFillBrush="#FF575757" Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True"
+                     
+            Minimum="{Binding Path=MinValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+            Maximum="{Binding Path=MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+            LowerValue="{Binding Path=CurrentMinValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            UpperValue="{Binding Path=CurrentMaxValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            LowerValueChanged="RangeSlider_LowerValueChanged" UpperValueChanged="RangeSlider_UpperValueChanged"
+            LowerThumbDragStarted="RangeSlider_LowerThumbDragStarted"
+            LowerThumbDragCompleted="RangeSlider_LowerThumbDragCompleted"
+            UpperThumbDragStarted="RangeSlider_UpperThumbDragStarted" 
+            UpperThumbDragCompleted="RangeSlider_UpperThumbDragCompleted" 
+            AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2" MoveWholeRange="True"
+            IsSnapToTickEnabled="True" IsMoveToPointEnabled="True" ExtendedMode="True" Controls:SliderHelper.TrackValueFillHoverBrush="#CCFFFFFF" Controls:SliderHelper.TrackValueFillPressedBrush="#CCFFFFFF" Controls:SliderHelper.ThumbFillHoverBrush="#FF7A7979"
+                                  >
                 <Controls:RangeSlider.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -65,7 +78,15 @@
                 </Controls:RangeSlider.RenderTransform>
             </Controls:RangeSlider>
 
+
+            
+            
             <TextBox Name="Prod" Height="27" Margin="22,21,32,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" KeyDown="Prod_KeyDown" Style="{DynamicResource SearchMetroTextBox}">
+
+                <Controls:TextBoxHelper.ButtonCommand>
+                    <Binding Path="FileBrowseCommand" Mode="OneWay" />
+                </Controls:TextBoxHelper.ButtonCommand>
+                
                 <TextBox.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -74,6 +95,7 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </TextBox.RenderTransform>
+                
             </TextBox>
 
             <ComboBox Name="CB" Height="26" Margin="13,21,26,0" VerticalAlignment="Top" SelectionChanged="CB_SelectionChanged" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
@@ -87,7 +109,7 @@
                 </ComboBox.RenderTransform>
             </ComboBox>
 
-            <Label Content="Категория" HorizontalAlignment="Left" Height="26" Margin="23,39,0,0" VerticalAlignment="Top"  RenderTransformOrigin="0.248,0.691" Grid.Column="1" Width="66">
+            <Label Content="Категории" HorizontalAlignment="Left" Height="26" Margin="23,39,0,0" VerticalAlignment="Top"  RenderTransformOrigin="0.248,0.691" Grid.Column="1" Width="66">
                 <Label.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>

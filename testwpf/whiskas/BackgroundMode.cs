@@ -6,12 +6,12 @@ namespace testwpf.whiskas
 {
    public static class BackgroundMode
    {
-      static Func<List<Product>> GetListUrlNew;
-      static Func<List<Product>> GetListUrlDB;
-      static Action<Product> AddDB;
-      static Action<List<Product>> SendMailMethod;
+      static Func<Request, List<Product>> GetListUrlNew;
+      static Func<List<Request>> GetListUrlDB;
+      static Action<List<Request>> AddDB;
+      static Action<List<Request>> SendMailMethod;
 
-      static public void Start(Func<List<Product>> _GetListUrlNew, Func<List<Product>> _GetListUrlDB, Action<Product> _AddDB, Action<List<Product>> _SendMailMethod)
+      static public void Start(Func<Request, List<Product>> _GetListUrlNew, Func<List<Request>> _GetListUrlDB, Action<List<Request>> _AddDB, Action<List<Request>> _SendMailMethod)
       {
 
          GetListUrlNew = _GetListUrlNew;
@@ -19,36 +19,48 @@ namespace testwpf.whiskas
          AddDB = _AddDB;
          SendMailMethod = _SendMailMethod;
 
+         //Body();
+
          var timer = new Timer((obj) => {
             if (( MainWindow.cfg.hour == DateTime.Now.Hour) &&
                ( MainWindow.cfg.minute == DateTime.Now.Minute))
             {
                Body();
             }
-
          }, null, 0, 60000);
 
       }
 
       static void Body()
       {
-         List<Product> listProductNew = GetListUrlNew?.Invoke();
-         List<Product> listProductDB = GetListUrlDB?.Invoke();
+         List<Request> newRequests = new List<Request>();
+         List<Request> listProductDB = GetListUrlDB?.Invoke();
 
-         List<Product> newProduct = new List<Product>();
-
-         // Ищем на совпадение между новым списком и списком из бд, возможно надо переделать под 
-         foreach (Product prod in listProductNew) 
+         foreach ( var request in listProductDB )
          {
-            if (listProductDB?.Find(x => x.url == prod.url) == null)
+            var newProducts = new List<Product>();
+            List<Product> listProductNew = GetListUrlNew?.Invoke(request);
+
+            foreach (Product prod in listProductNew)
             {
-               newProduct.Add(prod);
-               AddDB?.Invoke(prod);
+               if (request.ListProduct.Find(x => x.url == prod.url) == null)
+               {
+                  newProducts.Add(prod);
+               }
+            }
+
+            if ( newRequests.Count != 0 )
+            {
+               newRequests.Add(new Request(request.requestName, newProducts, request.minPrice, request.maxPrice));
             }
          }
 
-         if ( newProduct.Count > 0 )
-            SendMailMethod?.Invoke(newProduct);
+         if ( newRequests.Count != 0 )
+         {
+            AddDB(newRequests);
+            //SendMailMethod?.Invoke(newRequests);
+         }
+            
       }
 
    }

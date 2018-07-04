@@ -15,7 +15,6 @@ namespace testwpf
 {
    public partial class MainWindow
    {
-      static public List<Product> listProduct = new List<Product>();
       static public Settings cfg = new Settings();
       static Dictionary<string, string> ID = new Dictionary<string, string>(16);
 
@@ -26,7 +25,7 @@ namespace testwpf
          //cfg.findProduct = "холодильник";
          //cfg.categoryId = "90764"; 
 
-         cfg.findProduct = "Утюг";
+         cfg.findProduct = "";
          //cfg.categoryId = "54915";
 
          cfg.mailLogin = "nim20101@yandex.ru";
@@ -49,16 +48,10 @@ namespace testwpf
          //listProduct = new ObservableCollection<Product>(Purser.Start()); // через раз парсит
 
          // фоновый режим
-         BackgroundMode.Start(Purser.Start, UseDB.GetList, UseDB.addDB, SendMail.Send);
-
-         // заполнение таблицы
-         DataGrid1.ItemsSource = listProduct;
+         BackgroundMode.Start(Purser.Start, UseDB.GetList, UseDB.addRange, SendMail.Send);
 
          // иконка в трее
          IconTray.InitializeNotifyIcon(this, "tree.ico", new ToolStripItem[] { });
-
-         // пример добавления в таблицу: listProduct.Add(new Product("kek1", "kek2", "kek3"));
-         // ...
       }
 
       async void Find()
@@ -70,8 +63,6 @@ namespace testwpf
             List<Product> prod = new List<Product>();
 
             prod = Purser.Start();
-            if (prod.Count == 0)
-               listProduct.Clear();
 
             return prod;
          });
@@ -88,9 +79,15 @@ namespace testwpf
 
       private void CB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
       {
-         //Find();
+         if (flag) return;
+         DataGrid1.ItemsSource = Purser.Start(CB.SelectedItem.ToString());
+         flag = true;
+         CB.Items.Clear();
+         flag = false;
+         foreach (var node in Purser.CategoryList)
+            CB.Items.Add(node.Key);
       }
-      
+
       private void Prod_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
       {
          if (e.Key == Key.Return)
@@ -98,6 +95,36 @@ namespace testwpf
             cfg.findProduct = Prod.Text;
             Find();
          }
+      }
+
+      private void RangeSlider_LowerValueChanged(object sender, MahApps.Metro.Controls.RangeParameterChangedEventArgs e)
+      {
+
+      }
+
+      private void RangeSlider_UpperValueChanged(object sender, MahApps.Metro.Controls.RangeParameterChangedEventArgs e)
+      {
+
+      }
+
+      private void RangeSlider_LowerThumbDragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+      {
+
+      }
+
+      private void RangeSlider_LowerThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+      {
+
+      }
+
+      private void RangeSlider_UpperThumbDragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+      {
+
+      }
+
+      private void RangeSlider_UpperThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+      {
+
       }
    }
 }

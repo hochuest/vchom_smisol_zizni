@@ -6,7 +6,7 @@ namespace testwpf.whiskas
 {
    class SendMail
    {
-      public static void Send(List<Product> newProducts)
+      public static void Send(List<Request> newRequests)
       {
          // настройки smtp-сервера, с которого мы и будем отправлять письмо
          SmtpClient smtp = new SmtpClient("smtp.yandex.ru", 587);
@@ -24,8 +24,14 @@ namespace testwpf.whiskas
          // текст письма
 
          string message = "";
-         foreach (var pr in newProducts)
-            message += $"{pr.name} {pr.price} {pr.url} \n";
+         foreach (var nR in newRequests)
+         {
+            message += $"По запросу: {nR.requestName}\n";
+
+            foreach (var nP in nR.ListProduct)
+               message += $"   {nP.name}\n{nP.price}\n{nP.url}\n\n";
+         }
+            
 
          m.Body = MainWindow.cfg.before_the_message + message + MainWindow.cfg.after_the_message;
          smtp.Send(m);
