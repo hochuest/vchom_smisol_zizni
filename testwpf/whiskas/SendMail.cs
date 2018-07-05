@@ -29,7 +29,7 @@ namespace testwpf.whiskas
             message += $"По запросу: {nR.requestName}\n";
 
             foreach (var nP in nR.ListProduct)
-               message += $"   {nP.name}\n{nP.price}\n{nP.url}\n\n";
+               message += $"   {nP.name}\n   {nP.price}\n   {nP.url}\n\n";
          }
             
 

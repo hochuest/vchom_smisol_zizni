@@ -68,7 +68,9 @@
             Value="200"      
             LowerValue="0"
             UpperValue="250"
-
+                                  
+            LowerValueChanged="RangeSlider_LowerValueChanged"
+            UpperValueChanged="RangeSlider_UpperValueChanged"
             AutoToolTipPlacement="BottomRight"  MoveWholeRange="True"
             IsSnapToTickEnabled="True" IsMoveToPointEnabled="True" ExtendedMode="True" Controls:SliderHelper.TrackValueFillHoverBrush="#CCFFFFFF" Controls:SliderHelper.TrackValueFillPressedBrush="#CCFFFFFF" Controls:SliderHelper.ThumbFillHoverBrush="#FF7A7979"
                                   >

@@ -13,13 +13,17 @@ namespace testwpf
 {
    public partial class MainWindow
    {
-      static public Settings cfg = new Settings();
+      public static Settings cfg = new Settings();
       static Dictionary<string, string> ID = new Dictionary<string, string>(16);
+
+      public static int minPrice = 0;
+      public static int maxPrice = 200;
 
       public MainWindow()
       {
          InitializeComponent();
 
+         // части настроек
 
          //cfg.findProduct = "холодильник";
          //cfg.categoryId = "90764"; 
@@ -38,22 +42,18 @@ namespace testwpf
          cfg.before_the_message = "Поступили новые товары: \n";
          cfg.after_the_message = " (c) Система оповещений о новых товарах";
 
-         cfg.hour = 22;
-         cfg.minute = 44;
-
-         // getID.Go(CB, ID);
+         cfg.hour = 2;
+         cfg.minute = 22;
 
          // пурсер
          //listProduct = new ObservableCollection<Product>(Purser.Start()); // через раз парсит
 
          // фоновый режим
-         BackgroundMode.Start(Purser.Start, UseDB.GetList, UseDB.addRange, SendMail.Send);
+         BackgroundMode.Start(Purser.Start, UseDB.GetList, UseDB.AddRange, SendMail.Send);
 
          // иконка в трее
          IconTray.InitializeNotifyIcon(this, "tree.ico", new ToolStripItem[] { });
 
-
-         
       }
 
       async void Find(string path = null)
@@ -64,7 +64,10 @@ namespace testwpf
          DataGrid1.ItemsSource = await Task.Factory.StartNew(() => {
             List<Product> prod = new List<Product>();
 
-            prod = Purser.Start(null, path);
+            Request r = Purser.Start(new Request(cfg.findProduct, new List<Product>(), minPrice, maxPrice), path);
+            UseDB.Add(r);
+
+            prod = r.ListProduct;
 
             return prod;
          });
@@ -121,6 +124,16 @@ namespace testwpf
       private void Button_Click(object sender, RoutedEventArgs e)
       {
          Flyout.IsOpen = true;
+      }
+
+      private void RangeSlider_LowerValueChanged(object sender, MahApps.Metro.Controls.RangeParameterChangedEventArgs e)
+      {
+         minPrice = (int)e.NewValue;
+      }
+
+      private void RangeSlider_UpperValueChanged(object sender, MahApps.Metro.Controls.RangeParameterChangedEventArgs e)
+      {
+         maxPrice = (int)e.NewValue;
       }
    }
 }

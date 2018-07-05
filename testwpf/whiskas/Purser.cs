@@ -14,15 +14,8 @@ namespace testwpf.whiskas
    {
       static public Dictionary<string, string> CategoryList;
 
-      static public List<Product> Start(Request findProduct = null, string pars = null)
+      static public Request Start(Request findRequest, string pars = null)
       {
-         if (findProduct == null)
-         {
-            findProduct = new Request();
-            findProduct.requestName = MainWindow.cfg.findProduct;
-         }
-            
-
          var driverService = PhantomJSDriverService.CreateDefaultService();
          driverService.HideCommandPromptWindow = true;
 
@@ -31,10 +24,10 @@ namespace testwpf.whiskas
          {
             Driv.Navigate().GoToUrl("https://market.yandex.ru");
             IWebElement Search = Driv.FindElement(By.Id("header-search"));
-            Search.SendKeys(findProduct.requestName);
+            Search.SendKeys(findRequest.requestName);
             Search.SendKeys(Keys.Return);
             string url = Driv.Url;
-            url += "&how=aprice&viewtype=list";
+            url += $"&how=aprice&viewtype=list&pricefrom={findRequest.minPrice}&priceto={findRequest.maxPrice}";
             Driv.Navigate().GoToUrl(url);
          }
          else
@@ -56,7 +49,8 @@ namespace testwpf.whiskas
          }
 
          //document.LoadHtml(Driv.PageSource);
-         List<Product> listProduct = new List<Product>();
+
+         List<Product> ListProduct = new List<Product>();
 
          CategoryList = new Dictionary<string, string>();
          HtmlNodeCollection Category = document.DocumentNode.SelectNodes("//div[@class='SMIUZQVy8Y']//a");
@@ -68,7 +62,7 @@ namespace testwpf.whiskas
 
                CategoryList.Add(node.FirstChild.InnerText, "https://market.yandex.ru" + node.GetAttributeValue("href", "").Replace("amp;", "") + "&how=aprice&viewtype=list");
             }
-
+         
          if (nodeCollection != null)
          {
             int i = 0;
@@ -85,11 +79,12 @@ namespace testwpf.whiskas
                   href = "https:" + href;
                else
                   href = "https://market.yandex.ru" + href;
-               listProduct.Add(new Product(node.GetAttributeValue("title", ""), href, price));
+               ListProduct.Add(new Product(node.GetAttributeValue("title", ""), href, price));
                i++;
             }
          }
-         return listProduct;
+         
+         return new Request( findRequest.requestName, ListProduct, findRequest.minPrice, findRequest.maxPrice );
       }
    }
 }

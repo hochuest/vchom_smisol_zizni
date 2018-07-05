@@ -10,17 +10,17 @@ namespace testwpf.whiskas
    {
       static string filename = "tipodb.xml";
 
-      public static void addRange(List<Request> list)
+      public static void AddRange(List<Request> newListRequest)
       {
          var db = GetList();
 
-         foreach ( var dd in list )
-            db.Find(x => x.requestName == dd.requestName).ListProduct.AddRange(dd.ListProduct);
+         foreach ( var v in newListRequest)
+            db.Find(x => x.requestName == v.requestName).ListProduct.AddRange(v.ListProduct);
 
          XmlSaver.Save(filename, db);
       }
 
-      public static void add(Request newRequest)
+      public static void Add(Request newRequest)
       {
          var db = GetList();
 
@@ -33,14 +33,11 @@ namespace testwpf.whiskas
          {
             foreach (var v in newRequest.ListProduct)
             {
-               if (h.ListProduct.Find(x => x.url == v.url) != null)
+               if (h.ListProduct.Find(x => x.url == v.url) == null)
                {
-                  /// ...
+                  h.ListProduct.Add(v);
                }
             }
-            
-            
-            
          }
 
          XmlSaver.Save(filename, db);

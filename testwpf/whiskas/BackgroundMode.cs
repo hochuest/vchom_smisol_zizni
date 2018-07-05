@@ -6,12 +6,12 @@ namespace testwpf.whiskas
 {
    public static class BackgroundMode
    {
-      static Func<Request, string, List<Product>> GetListUrlNew;
+      static Func<Request, string, Request> GetListUrlNew;
       static Func<List<Request>> GetListUrlDB;
       static Action<List<Request>> AddDB;
       static Action<List<Request>> SendMailMethod;
 
-      static public void Start(Func<Request, string, List<Product>> _GetListUrlNew, Func<List<Request>> _GetListUrlDB, Action<List<Request>> _AddDB, Action<List<Request>> _SendMailMethod)
+      static public void Start(Func<Request, string, Request> _GetListUrlNew, Func<List<Request>> _GetListUrlDB, Action<List<Request>> _AddDB, Action<List<Request>> _SendMailMethod)
       {
 
          GetListUrlNew = _GetListUrlNew;
@@ -19,7 +19,7 @@ namespace testwpf.whiskas
          AddDB = _AddDB;
          SendMailMethod = _SendMailMethod;
 
-         //Body();
+         Body();
 
          var timer = new Timer((obj) => {
             if (( MainWindow.cfg.hour == DateTime.Now.Hour) &&
@@ -39,26 +39,26 @@ namespace testwpf.whiskas
          foreach ( var request in listProductDB )
          {
             var newProducts = new List<Product>();
-            List<Product> listProductNew = GetListUrlNew?.Invoke(request, null);
+            List<Product> listProductNew = GetListUrlNew?.Invoke(request, null).ListProduct;
 
             foreach (Product prod in listProductNew)
             {
-               if (request.ListProduct.Find(x => x.url == prod.url) == null)
+               if (request.ListProduct.Find(x => x.name == prod.name && x.price == prod.price) == null)
                {
                   newProducts.Add(prod);
                }
             }
 
-            if ( newRequests.Count != 0 )
+            if (newProducts.Count > 0 )
             {
                newRequests.Add(new Request(request.requestName, newProducts, request.minPrice, request.maxPrice));
             }
          }
 
-         if ( newRequests.Count != 0 )
+         if ( newRequests.Count > 0 )
          {
             AddDB(newRequests);
-            //SendMailMethod?.Invoke(newRequests);
+            SendMailMethod?.Invoke(newRequests);
          }
             
       }
