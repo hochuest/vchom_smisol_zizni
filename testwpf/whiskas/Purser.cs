@@ -48,6 +48,8 @@ namespace testwpf.whiskas
             Search2.Click();
          }
 
+         Driv.Close();
+
          //document.LoadHtml(Driv.PageSource);
 
          List<Product> ListProduct = new List<Product>();
