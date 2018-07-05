@@ -19,7 +19,7 @@ namespace testwpf.whiskas
          AddDB = _AddDB;
          SendMailMethod = _SendMailMethod;
 
-         Body();
+         //Body();
 
          var timer = new Timer((obj) => {
             if (( MainWindow.cfg.hour == DateTime.Now.Hour) &&
