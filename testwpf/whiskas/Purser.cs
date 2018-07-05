@@ -14,6 +14,8 @@ namespace testwpf.whiskas
    {
       static public Dictionary<string, string> CategoryList;
 
+      static public HtmlDocument document;
+
       static public Request Start(Request findRequest, string pars = null)
       {
          var driverService = PhantomJSDriverService.CreateDefaultService();
@@ -35,7 +37,7 @@ namespace testwpf.whiskas
             Driv.Navigate().GoToUrl(CategoryList[pars]);
          }
 
-         var document = new HtmlDocument();
+         document = new HtmlDocument();
          document.LoadHtml(Driv.PageSource);
 
          HtmlNode AllCategory = document.DocumentNode.SelectSingleNode("//a[@class='link link_theme_normal']");
@@ -47,7 +49,7 @@ namespace testwpf.whiskas
             IWebElement Search2 = Driv.FindElement(By.XPath("//div[@class='_2BLXswkhGO']/span"));
             Search2.Click();
          }
-
+         
          Driv.Close();
 
          //document.LoadHtml(Driv.PageSource);
@@ -64,6 +66,8 @@ namespace testwpf.whiskas
 
                CategoryList.Add(node.FirstChild.InnerText, "https://market.yandex.ru" + node.GetAttributeValue("href", "").Replace("amp;", "") + "&how=aprice&viewtype=list");
             }
+
+
          
          if (nodeCollection != null)
          {

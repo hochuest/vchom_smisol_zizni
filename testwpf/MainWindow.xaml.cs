@@ -8,6 +8,7 @@ using testwpf.whiskas;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Diagnostics;
+using HtmlAgilityPack;
 
 namespace testwpf
 {
@@ -23,6 +24,7 @@ namespace testwpf
       {
          InitializeComponent();
 
+         //cfg = (Settings)XmlSaver.Read(Settings.fileName, typeof(Settings));
          // части настроек
 
          //cfg.findProduct = "холодильник";
@@ -44,6 +46,9 @@ namespace testwpf
 
          cfg.hour = 2;
          cfg.minute = 22;
+
+         //XmlSaver.Save(Settings.fileName, cfg);
+
 
          // пурсер
          //listProduct = new ObservableCollection<Product>(Purser.Start()); // через раз парсит
@@ -86,6 +91,14 @@ namespace testwpf
          }
          else
             CB.IsEnabled = false;
+
+         HtmlNodeCollection Price = Purser.document.DocumentNode.SelectNodes("//div[@class='_16hsbhrgAf']/ul/li/p/input");
+         if (Price != null)
+         {
+            RangeSlider.Minimum = Convert.ToInt32(Price[0].GetAttributeValue("placeholder", "").Replace(" ", ""));
+            RangeSlider.Maximum = Convert.ToInt32(Price[1].GetAttributeValue("placeholder", "").Replace(" ", ""));
+         }
+
       }
 
       // events
