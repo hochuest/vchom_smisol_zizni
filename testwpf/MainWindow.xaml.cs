@@ -31,6 +31,8 @@ namespace testwpf
 
          mailSend.Text = cfg.recipientOfLetters;
 
+
+
          // фоновый режим
          BackgroundMode.Start(Purser.Start, UseDB.GetList, UseDB.AddRange, SendMail.Send);
 
