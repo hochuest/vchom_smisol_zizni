@@ -48,7 +48,9 @@ namespace testwpf
             return;
          }
 
-         List <Product> items;
+         List <Product> items = new List<Product>();
+         DataGrid1.ItemsSource = items;
+
          ProgressRing.IsActive = true;
 
          items = await Task.Factory.StartNew(() => {
