@@ -30,9 +30,8 @@ namespace testwpf
          SaverSettings.Refresh();
 
          mailSend.Text = cfg.recipientOfLetters;
-
-
-
+         
+         //TimePicker.SelectedTime = new DataGridViewCellToolTipTextNeededEventArgs,e;
          // фоновый режим
          BackgroundMode.Start(Purser.Start, UseDB.GetList, UseDB.AddRange, SendMail.Send);
 
