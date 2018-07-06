@@ -165,7 +165,7 @@
             <Grid>
                 <Label Content="Получатель уведомлений" Margin="10,21,0,0" Foreground="White" HorizontalAlignment="Left" Width="157" Height="29" VerticalAlignment="Top"></Label>
                 <Label Content="Время уведомлений" Margin="0,76,10,0" Foreground="White" HorizontalAlignment="Right" Width="126" Height="28" VerticalAlignment="Top"></Label>
-                <TextBox Margin="10,50,10,0" Background="#91000000" Height="24" VerticalAlignment="Top" />
+                <TextBox Name="mailSend" Margin="10,50,10,0" Background="#91000000" Height="24" VerticalAlignment="Top" />
                 <Controls:TimePicker Name="TimePicker" Margin="0,104,10,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Right" Culture="ru-RU" SelectedTimeFormat="Short" Width="126"/>
             </Grid>
         </Controls:Flyout>

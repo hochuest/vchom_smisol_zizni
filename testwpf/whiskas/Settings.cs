@@ -8,7 +8,7 @@ namespace testwpf.whiskas
 {
    public class Settings
    {
-      public string findProduct { get; set; }
+      public string findProduct = "";
       public string mailLogin = "nim20101@yandex.ru";
       public string mailPass = "madama98";
 
@@ -21,18 +21,5 @@ namespace testwpf.whiskas
 
       public int hour { get; set; }
       public int minute { get; set; }
-
-      public static string fileName = "settings.xml";
-
-      public static void Save()
-      {
-         //XmlSaver.Save( );
-      }
-
-      public static void Refresh()
-      {
-
-      }
-
    }
 }

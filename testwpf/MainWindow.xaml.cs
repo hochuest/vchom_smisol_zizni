@@ -27,22 +27,15 @@ namespace testwpf
       {
          InitializeComponent();
 
-         //cfg = (Settings)XmlSaver.Read(Settings.fileName, typeof(Settings));
-         //XmlSaver.Save(Settings.fileName, cfg);
+         SaverSettings.Refresh();
 
-         cfg.findProduct = "";
+         mailSend.Text = cfg.recipientOfLetters;
 
-         cfg.recipientOfLetters = "nim20101@yandex.ru";
-
-         //cfg.hour = 6;
-
-        
          // фоновый режим
          BackgroundMode.Start(Purser.Start, UseDB.GetList, UseDB.AddRange, SendMail.Send);
 
          // иконка в трее
          IconTray.InitializeNotifyIcon(this, "tree.ico", new ToolStripItem[] { });
-         
       }
 
       async void Find(string path = null)
@@ -149,6 +142,10 @@ namespace testwpf
       {
          cfg.hour = TimePicker?.SelectedTime != null ? (int)(TimePicker?.SelectedTime.Value.Hours) : 0;
          cfg.minute = TimePicker?.SelectedTime != null ? (int)(TimePicker?.SelectedTime.Value.Minutes) : 0;
+         
+         cfg.recipientOfLetters = mailSend.Text;
+
+         SaverSettings.Save();
       }
    }
 }

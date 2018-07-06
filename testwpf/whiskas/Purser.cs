@@ -88,8 +88,6 @@ namespace testwpf.whiskas
 
                CategoryList.Add(node.FirstChild.InnerText, "https://market.yandex.ru" + node.GetAttributeValue("href", "").Replace("amp;", "") + "&how=aprice&viewtype=list");
             }
-
-
          
          if (nodeCollection != null)
          {
