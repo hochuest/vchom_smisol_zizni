@@ -12,9 +12,12 @@ namespace testwpf.whiskas
 {
    public class Purser
    {
+      static public int Minimum;
+      static public int Maximum;
+
       static public Dictionary<string, string> CategoryList;
 
-      static public HtmlDocument document;
+      static public HtmlDocument document = new HtmlDocument();
 
       static public Request Start(Request findRequest, string pars = null)
       {
@@ -29,12 +32,31 @@ namespace testwpf.whiskas
             Search.SendKeys(findRequest.requestName);
             Search.SendKeys(Keys.Return);
             string url = Driv.Url;
-            url += $"&how=aprice&viewtype=list&pricefrom={findRequest.minPrice}&priceto={findRequest.maxPrice}";
+            //мин и макс ретурн их
+            document.LoadHtml(Driv.PageSource);
+            HtmlNodeCollection Price = document.DocumentNode.SelectNodes("//div[@class='_16hsbhrgAf']/ul/li/p/input");
+            if (Price != null)
+            {
+               Minimum = Convert.ToInt32(Price[0].GetAttributeValue("placeholder", "").Replace(" ", ""));
+               Maximum = Convert.ToInt32(Price[1].GetAttributeValue("placeholder", "").Replace(" ", ""));
+            }
+            if (Minimum <= findRequest.minPrice && Maximum >= findRequest.maxPrice)
+               url += $"&how=aprice&viewtype=list&pricefrom={findRequest.minPrice}&priceto={findRequest.maxPrice}";
+            else
+               url += $"&how=aprice&viewtype=list&pricefrom={Minimum}&priceto={Maximum}";
             Driv.Navigate().GoToUrl(url);
          }
          else
          {
             Driv.Navigate().GoToUrl(CategoryList[pars]);
+
+            document.LoadHtml(Driv.PageSource);
+            HtmlNodeCollection Price = document.DocumentNode.SelectNodes("//div[@class='_16hsbhrgAf']/ul/li/p/input");
+            if (Price != null)
+            {
+               Minimum = Convert.ToInt32(Price[0].GetAttributeValue("placeholder", "").Replace(" ", ""));
+               Maximum = Convert.ToInt32(Price[1].GetAttributeValue("placeholder", "").Replace(" ", ""));
+            }
          }
 
          document = new HtmlDocument();
@@ -42,15 +64,15 @@ namespace testwpf.whiskas
 
          HtmlNode AllCategory = document.DocumentNode.SelectSingleNode("//a[@class='link link_theme_normal']");
          if (AllCategory != null)
-            Driv.Navigate().GoToUrl("https://market.yandex.ru" + AllCategory.GetAttributeValue("href", ""));
+            Driv.Navigate().GoToUrl("https://market.yandex.ru" + AllCategory.GetAttributeValue("href", "") + $"&how=aprice&viewtype=list&pricefrom ={findRequest.minPrice}&priceto ={findRequest.maxPrice}");
          HtmlNode moreCategory = document.DocumentNode.SelectSingleNode("//div[@class='_2BLXswkhGO']/span");
          if (moreCategory != null)
          {
             IWebElement Search2 = Driv.FindElement(By.XPath("//div[@class='_2BLXswkhGO']/span"));
             Search2.Click();
          }
-         
-         Driv.Close();
+
+         Driv.Quit();
 
          //document.LoadHtml(Driv.PageSource);
 

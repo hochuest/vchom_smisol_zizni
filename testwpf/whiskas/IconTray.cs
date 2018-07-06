@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Windows;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,8 @@ namespace testwpf.whiskas
          m_notifyIcon = new NotifyIcon();
 
          m_notifyIcon.Text = "test3";
-         m_notifyIcon.Icon = new Icon(pathIcoFile);
+         if ( File.Exists(pathIcoFile) )
+            m_notifyIcon.Icon = new Icon(pathIcoFile);
          m_notifyIcon.MouseClick += new MouseEventHandler(m_notifyIcon_MouseClick);
 
          m_notifyIcon.ContextMenuStrip = new ContextMenuStrip();
@@ -33,6 +35,9 @@ namespace testwpf.whiskas
 
       static public void ev(EventArgs args)
       {
+         if (m_notifyIcon.Icon == null)
+            return;
+
          if (mw.WindowState == WindowState.Minimized)
             mw.Hide();
          else
