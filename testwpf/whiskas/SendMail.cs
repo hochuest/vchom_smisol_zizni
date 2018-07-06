@@ -33,7 +33,7 @@ namespace testwpf.whiskas
          }
             
 
-         m.Body = MainWindow.cfg.before_the_message + message + MainWindow.cfg.after_the_message;
+         m.Body = MainWindow.cfg.before_the_message + "\n" + message + "\n\n" + MainWindow.cfg.after_the_message;
          smtp.Send(m);
       }
    }

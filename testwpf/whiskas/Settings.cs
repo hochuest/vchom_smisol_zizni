@@ -8,14 +8,14 @@ namespace testwpf.whiskas
 {
    public class Settings
    {
-      public string findProduct = "";
-      public string mailLogin = "nim20101@yandex.ru";
-      public string mailPass = "madama98";
+      public string findProduct { get; set; }
+      public string mailLogin { get; set; }
+      public string mailPass { get; set; }
 
-      public string message_header = "заголовок сообщения";
-      public string letter_subject = "тема сообщения";
-      public string before_the_message = "Поступили новые товары: \n";
-      public string after_the_message = " (c) Система оповещений о новых товарах";
+      public string message_header { get; set; }
+      public string letter_subject { get; set; }
+      public string before_the_message { get; set; }
+      public string after_the_message { get; set; }
 
       public string recipientOfLetters { get; set; }
 
