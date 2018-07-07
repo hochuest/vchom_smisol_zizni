@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Threading.Tasks;
+using System.Timers;
 
 namespace testwpf.whiskas
 {
@@ -21,13 +22,16 @@ namespace testwpf.whiskas
 
          //Body();
 
-         var timer = new Timer((obj) => {
-            if (( MainWindow.cfg.hour == DateTime.Now.Hour) &&
-               ( MainWindow.cfg.minute == DateTime.Now.Minute))
+         Timer timer = new Timer(60000);
+         timer.Elapsed += async (sender, e) => await Task.Factory.StartNew(() => {
+            if ((MainWindow.cfg.hour == DateTime.Now.Hour) &&
+               (MainWindow.cfg.minute == DateTime.Now.Minute))
             {
                Body();
             }
-         }, null, 0, 60000);
+         });
+         timer.Start();
+
 
       }
 

@@ -23,17 +23,61 @@ namespace testwpf.whiskas
          m.Subject = "theme";
          // текст письма
 
-         string message = "";
+         m.IsBodyHtml = true;
+
+         string message = @"
+            <!DOCTYPE html>
+            <html lang=""en"">
+            <head>
+               <title>Bootstrap Example</title>
+               <meta charset=""utf-8"">
+               <meta name=""viewport"" content=""width =device-width, initial-scale=1"">
+               <link rel=""stylesheet"" href=""https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"">
+               <script src=""https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js""></script>
+               <script src=""https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js""></script>
+               <script src=""https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js""></script>
+            </head>
+            <body>
+            <div class=""container"">
+         ";
+
+
          foreach (var nR in newRequests)
          {
-            message += $"По запросу: {nR.requestName}\n";
+            message += $@"
+               <h2>По запросу: {nR.requestName}</h2>    
+               <p>Найдено {nR.ListProduct.Count} новых товаров</p>     
+               <table class=""table table-striped"">
+                  <thead class=""thead-dark"">
+                     <tr>
+                        <th style=""width: 150px; "">Цена</th>
+                        <th>Товар</th>
+                     </tr>
+                  </thead>
+               <tbody> 
+            ";
 
             foreach (var nP in nR.ListProduct)
-               message += $"   {nP.name}\n   {nP.price}\n   {nP.url}\n\n";
-         }
-            
+               message += $@" 
+                  <tr>
+                     <td>{nP.price}</td>
+                     <td><a href="" {nP.url}"">{nP.name}</a></td>
+                  </tr>
+               ";
 
-         m.Body = MainWindow.cfg.before_the_message + "\n" + message + "\n\n" + MainWindow.cfg.after_the_message;
+            message += @"
+               </tbody>
+             </table>
+            ";
+         }
+
+         message += @"
+            </div>
+            </body>
+            </html>
+         ";
+
+         m.Body = message;
          smtp.Send(m);
       }
    }
